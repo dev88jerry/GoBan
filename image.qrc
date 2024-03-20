@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/src">
+        <file>img/grid.png</file>
+        <file>img/titre.png</file>
+    </qresource>
+</RCC>
