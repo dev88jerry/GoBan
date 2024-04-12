@@ -156,185 +156,87 @@ bool JeuSudokuz::gagner()
     bool wWin = false;
 
     if (t % 2 == 1) {
-        //vertical check working
-        int x = 0;
-        do {
-            int j = 5;
-            int i = 0;
-            do {
-                int br = 0;
-                int k = i;
-                do {
-                    //black row
-                    if (*gCheck[x][k] == 1) {
-                        br += *gCheck[x][k];
-                        if (br == 5) {
-                            //qDebug() << "Winner black row " << x << " count: " << br << endl;
-                            //cout << "Winner black row " << x << " count: " << br << endl;
-                            bWin = true;
+        //vertical and horizontal check
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                int bc = 0;
+                int wc = 0;
+                for (int k = 0; k < WIN_CONDITION; k++) {
+                    if (i + k < BOARD_SIZE && j + k < BOARD_SIZE) {
+                        if (*gCheck[i + k][j] == BLACK) {
+                            bc++;
+                        }
+                        if (*gCheck[i][j + k] == BLACK) {
+                            bc++;
+                        }
+                        if (*gCheck[i + k][j + k] == BLACK) {
+                            bc++;
+                        }
+                        if (*gCheck[i + k][j] == WHITE) {
+                            wc++;
+                        }
+                        if (*gCheck[i][j + k] == WHITE) {
+                            wc++;
+                        }
+                        if (*gCheck[i + k][j + k] == WHITE) {
+                            wc++;
                         }
                     }
-                    k++;
-                } while (k < j && bWin == false);
-                j++;
-                i++;
-            } while (i < 9 && bWin == false);
-            x++;
-        } while (x < 13 && bWin == false);
-
-        if (bWin == false) {
-            //horizontal check
-            for (int i = 0; i < 13; i++) {
-                for (int j = 0; j < 13; j++) {
-                    int a = i, b = j;
-                    int bc = 0;
-                    for (int k = 0; k < 5; k++) {
-                        if (a <= 12 && b <= 12) {
-                            if (*gCheck[a][b] == 1) {
-                                bc += *gCheck[a][b];
-                                if (bc == 5) {
-                                    //qDebug() << "start column: " << a << " ,  " << b << endl;
-                                    bWin = true;
-                                }
-                            }
-                            a++;
-                        }
+                    if (bc == WIN_CONDITION) {
+                        bWin = true;
                     }
-                    b++;
-                }
-            }
-
-            //diag right
-            for (int i = 0; i < 13; i++) {
-                for (int j = 0; j < 13; j++) {
-                    int dxr = i, dyr = j;
-                    int bc = 0;
-                    //diag++
-                    if (dxr + 5 <= 13 && dyr + 5 <= 13) {
-                        for (int sdx = dxr, sdy = dyr; dxr < sdx + 5 && dyr < sdy + 5; dxr++, dyr++) {
-                            //black
-                            if (*gCheck[dxr][dyr] == 1) {
-                                bc += *gCheck[dxr][dyr];
-                                if (bc == 5) {
-                                    //qDebug() << "start X,Y: " << dxr << " ,  " << dyr << endl;
-                                    //cout << "start X,Y: " << dxr << " ,  " << dyr << endl;
-                                    bWin = true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            //diag left
-            for (int i = 12; i >= 0; i--) {
-                for (int j = 0; j < 13; j++) {
-                    int dxl = i, dyl = j;
-                    int bc = 0;
-                    if (dxl - 5 > -2 && dyl + 5 <= 13) {
-                        for (int sdx = dxl, sdy = dyl; dxl >= sdx - 5 && dyl < sdy + 5; dxl--, dyl++) {
-                            //black
-                            if (*gCheck[dxl][dyl] == 1) {
-                                bc += *gCheck[dxl][dyl];
-                                if (bc == 5) {
-                                    //qDebug() << "start X,Y: " << dxl << " ,  " << dyl << endl;
-                                    //cout << "start X,Y: " << dxl << " ,  " << dyl << endl;
-                                    bWin = true;
-                                }
-                            }
-                        }
+                    if (wc == WIN_CONDITION * 2) {
+                        wWin = true;
                     }
                 }
             }
         }
-    }
-    else {
-        //white check
-        //vertical
-        int x = 0;
-        do {
-            int j = 5;
-            int i = 0;
-            do {
-                int wr = 0;
-                int k = i;
-                do {
-                    //white row
-                    if (*gCheck[x][k] == 2) {
-                        wr += *gCheck[x][k];
-                        if (wr == 10) {
-                            //qDebug() << "Winner white row " << x << " count: " << wr << endl;
-                            //cout << "Winner white row " << x << " count: " << wr << endl;
-                            wWin = true;
+
+        //diag right
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                int dxr = i, dyr = j;
+                int bc = 0;
+                int wc = 0;
+                if (dxr + WIN_CONDITION <= BOARD_SIZE && dyr + WIN_CONDITION <= BOARD_SIZE) {
+                    for (int sdx = dxr, sdy = dyr; dxr < sdx + WIN_CONDITION && dyr < sdy + WIN_CONDITION; dxr++, dyr++) {
+                        if (*gCheck[dxr][dyr] == BLACK) {
+                            bc++;
+                        }
+                        if (*gCheck[dxr][dyr] == WHITE) {
+                            wc++;
                         }
                     }
-                    k++;
-                } while (k < j && wWin == false);
-                j++;
-                i++;
-            } while (i < 9 && wWin == false);
-            x++;
-        } while (x < 13 && wWin == false);
-
-        if (wWin == false) {
-            //horizontal
-
-            for (int i = 0; i < 13; i++) {
-                for (int j = 0; j < 13; j++) {
-                    int a = i, b = j;
-                    int wc = 0;
-                    for (int k = 0; k < 5; k++) {
-                        if (a <= 12 && b <= 12) {
-                            if (*gCheck[a][b] == 2) {
-                                wc += *gCheck[a][b];
-                                if (wc == 10) {
-                                    //qDebug() << "start column: " << a << " ,  " << b << endl;
-                                    bWin = true;
-                                }
-                            }
-                            a++;
-                        }
+                    if (bc == WIN_CONDITION) {
+                        bWin = true;
                     }
-                    b++;
-                }
-            }
-
-            //diag right
-            for (int i = 0; i < 13; i++) {
-                for (int j = 0; j < 13; j++) {
-                    int dxr = i, dyr = j;
-                    int wc = 0;
-                    //diag++
-                    if (dxr + 5 <= 13 && dyr + 5 <= 13) {
-                        for (int sdx = dxr, sdy = dyr; dxr < sdx + 5 && dyr < sdy + 5; dxr++, dyr++) {
-                            if (*gCheck[dxr][dyr] == 2) {
-                                wc += *gCheck[dxr][dyr];
-                                if (wc == 10) {
-                                    //qDebug() << "start X,Y: " << dxr << " ,  " << dyr << endl;
-                                    //cout << "start X,Y: " << dxr << " ,  " << dyr << endl;
-                                    wWin = true;
-                                }
-                            }
-                        }
+                    if (wc == WIN_CONDITION * 2) {
+                        wWin = true;
                     }
                 }
             }
-            //diag left
-            for (int i = 12; i >= 0; i--) {
-                for (int j = 0; j < 13; j++) {
-                    int dxl = i, dyl = j;
-                    int wc = 0;
-                    if (dxl - 5 > -2 && dyl + 5 <= 13) {
-                        for (int sdx = dxl, sdy = dyl; dxl >= sdx - 5 && dyl < sdy + 5; dxl--, dyl++) {
-                            //white
-                            if (*gCheck[dxl][dyl] == 2) {
-                                wc += *gCheck[dxl][dyl];
-                                if (wc == 10) {
-                                    //qDebug() << "start X,Y: " << dxl << " ,  " << dyl << endl;
-                                    //cout << "start X,Y: " << dxl << " ,  " << dyl << endl;
-                                    wWin = true;
-                                }
-                            }
+        }
+
+        //diag left
+        for (int i = BOARD_SIZE - 1; i >= 0; i--) {
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                int dxl = i, dyl = j;
+                int bc = 0;
+                int wc = 0;
+                if (dxl - WIN_CONDITION > -2 && dyl + WIN_CONDITION <= BOARD_SIZE) {
+                    for (int sdx = dxl, sdy = dyl; dxl >= sdx - WIN_CONDITION && dyl < sdy + WIN_CONDITION; dxl--, dyl++) {
+                        if (*gCheck[dxl][dyl] == BLACK) {
+                            bc++;
                         }
+                        if (*gCheck[dxl][dyl] == WHITE) {
+                            wc++;
+                        }
+                    }
+                    if (bc == WIN_CONDITION) {
+                        bWin = true;
+                    }
+                    if (wc == WIN_CONDITION * 2) {
+                        wWin = true;
                     }
                 }
             }

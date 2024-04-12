@@ -65,6 +65,11 @@ protected:
     //0=emp,1=b,2=w
     int grid[13][13]={0};
 
+    const int BOARD_SIZE = 13;
+    const int WIN_CONDITION = 5;
+    const int BLACK = 1;
+    const int WHITE = 2;
+
     NewP *m_newP;
     Gagnant *m_gagnant;
 
