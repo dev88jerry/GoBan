@@ -157,54 +157,87 @@ bool JeuSudokuz::gagner()
 
     for(int xCoord = 0; xCoord < BOARD_SIZE; xCoord++){
         for(int yCoord = 0; yCoord < BOARD_SIZE; yCoord++){
-            //check next 5 positions
-            int vert, horz, diagL, diagR = 0;
+            int vertBlack, horzBlack, diagLBlack, diagRBlack = 0;
+            int vertWhite, horzWhite, diagLWhite, diagRWhite = 0;
             for(int i = 1; i < 5; i++){
                 if(yCoord + i >= BOARD_SIZE && xCoord + i >= BOARD_SIZE && xCoord - i < 0){
                     if(*gCheck[xCoord + i][yCoord]== BLACK){
-                        horz++;
+                        horzBlack++;
                     }
                     if(*gCheck[xCoord][yCoord + i]== BLACK){
-                        vert++;
+                        vertBlack++;
                     }
                     if(*gCheck[xCoord + i][yCoord + i]== BLACK){
-                        diagR++;
+                        diagRBlack++;
                     }
                     if(*gCheck[xCoord - i][yCoord+i]== BLACK){
-                        diagL++;
+                        diagLBlack++;
+                    }
+                    if(*gCheck[xCoord + i][yCoord]== WHITE){
+                        horzWhite++;
+                    }
+                    if(*gCheck[xCoord][yCoord + i]== WHITE){
+                        vertWhite++;
+                    }
+                    if(*gCheck[xCoord + i][yCoord + i]== WHITE){
+                        diagRWhite++;
+                    }
+                    if(*gCheck[xCoord - i][yCoord+i]== WHITE){
+                        diagLWhite++;
                     }
                 }
                 else if(yCoord + i >= BOARD_SIZE && xCoord + i >= BOARD_SIZE){
                     if(*gCheck[xCoord + i][yCoord]== BLACK){
-                        horz++;
+                        horzBlack++;
                     }
                     if(*gCheck[xCoord][yCoord + i]== BLACK){
-                        vert++;
+                        vertBlack++;
                     }
                     if(*gCheck[xCoord + i][yCoord + i]== BLACK){
-                        diagR++;
+                        diagRBlack++;
+                    }
+                    if(*gCheck[xCoord + i][yCoord]== WHITE){
+                        horzWhite++;
+                    }
+                    if(*gCheck[xCoord][yCoord + i]== WHITE){
+                        vertWhite++;
+                    }
+                    if(*gCheck[xCoord + i][yCoord + i]== WHITE){
+                        diagRWhite++;
                     }
                 }
                 else if(yCoord + i >= BOARD_SIZE){
                     if(*gCheck[xCoord][yCoord + i]== BLACK){
-                        vert++;
+                        vertBlack++;
+                    }
+                    if(*gCheck[xCoord][yCoord + i]== WHITE){
+                        vertWhite++;
                     }
                 }
                 else if(xCoord + i >= BOARD_SIZE){
                     if(*gCheck[xCoord + i][yCoord]== BLACK){
-                        horz++;
+                        horzBlack++;
                     }
-
+                    if(*gCheck[xCoord + i][yCoord]== WHITE){
+                        horzWhite++;
+                    }
                 }
                 else if(xCoord - i < 0 && yCoord + i >= BOARD_SIZE){
                     if(*gCheck[xCoord - i][yCoord+i]== BLACK){
-                        diagL++;
+                        diagLBlack++;
+                    }
+                    if(*gCheck[xCoord - i][yCoord+i]== WHITE){
+                        diagLWhite++;
                     }
                 }
-
-                if(vert == 5 || horz == 5 || diagL == 5 || diaR == 5){
-                    bWin = true;
-                }
+            }
+            if(vertBlack == 5 || horzBlack == 5 || diagLBlack == 5 || diagRBlack == 5){
+                bWin = true;
+                break;
+            }
+            else if(vertWhite == 5 || horzWhite == 5 || diagLWhite == 5 || diagRWhite == 5){
+                wWin = true;
+                break;
             }
         }
     }
