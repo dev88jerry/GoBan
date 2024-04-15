@@ -155,89 +155,55 @@ bool JeuSudokuz::gagner()
     bool bWin = false;
     bool wWin = false;
 
-    if (t % 2 == 1) {
-        //vertical and horizontal check
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                int bc = 0;
-                int wc = 0;
-                for (int k = 0; k < WIN_CONDITION; k++) {
-                    if (i + k < BOARD_SIZE && j + k < BOARD_SIZE) {
-                        if (*gCheck[i + k][j] == BLACK) {
-                            bc++;
-                        }
-                        if (*gCheck[i][j + k] == BLACK) {
-                            bc++;
-                        }
-                        if (*gCheck[i + k][j + k] == BLACK) {
-                            bc++;
-                        }
-                        if (*gCheck[i + k][j] == WHITE) {
-                            wc++;
-                        }
-                        if (*gCheck[i][j + k] == WHITE) {
-                            wc++;
-                        }
-                        if (*gCheck[i + k][j + k] == WHITE) {
-                            wc++;
-                        }
+    for(int xCoord = 0; xCoord < BOARD_SIZE; xCoord++){
+        for(int yCoord = 0; yCoord < BOARD_SIZE; yCoord++){
+            //check next 5 positions
+            int vert, horz, diagL, diagR = 0;
+            for(int i = 1; i < 5; i++){
+                if(yCoord + i >= BOARD_SIZE && xCoord + i >= BOARD_SIZE && xCoord - i < 0){
+                    if(*gCheck[xCoord + i][yCoord]== BLACK){
+                        horz++;
                     }
-                    if (bc == WIN_CONDITION) {
-                        bWin = true;
+                    if(*gCheck[xCoord][yCoord + i]== BLACK){
+                        vert++;
                     }
-                    if (wc == WIN_CONDITION * 2) {
-                        wWin = true;
+                    if(*gCheck[xCoord + i][yCoord + i]== BLACK){
+                        diagR++;
+                    }
+                    if(*gCheck[xCoord - i][yCoord+i]== BLACK){
+                        diagL++;
                     }
                 }
-            }
-        }
-
-        //diag right
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                int dxr = i, dyr = j;
-                int bc = 0;
-                int wc = 0;
-                if (dxr + WIN_CONDITION <= BOARD_SIZE && dyr + WIN_CONDITION <= BOARD_SIZE) {
-                    for (int sdx = dxr, sdy = dyr; dxr < sdx + WIN_CONDITION && dyr < sdy + WIN_CONDITION; dxr++, dyr++) {
-                        if (*gCheck[dxr][dyr] == BLACK) {
-                            bc++;
-                        }
-                        if (*gCheck[dxr][dyr] == WHITE) {
-                            wc++;
-                        }
+                else if(yCoord + i >= BOARD_SIZE && xCoord + i >= BOARD_SIZE){
+                    if(*gCheck[xCoord + i][yCoord]== BLACK){
+                        horz++;
                     }
-                    if (bc == WIN_CONDITION) {
-                        bWin = true;
+                    if(*gCheck[xCoord][yCoord + i]== BLACK){
+                        vert++;
                     }
-                    if (wc == WIN_CONDITION * 2) {
-                        wWin = true;
+                    if(*gCheck[xCoord + i][yCoord + i]== BLACK){
+                        diagR++;
                     }
                 }
-            }
-        }
+                else if(yCoord + i >= BOARD_SIZE){
+                    if(*gCheck[xCoord][yCoord + i]== BLACK){
+                        vert++;
+                    }
+                }
+                else if(xCoord + i >= BOARD_SIZE){
+                    if(*gCheck[xCoord + i][yCoord]== BLACK){
+                        horz++;
+                    }
 
-        //diag left
-        for (int i = BOARD_SIZE - 1; i >= 0; i--) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                int dxl = i, dyl = j;
-                int bc = 0;
-                int wc = 0;
-                if (dxl - WIN_CONDITION > -2 && dyl + WIN_CONDITION <= BOARD_SIZE) {
-                    for (int sdx = dxl, sdy = dyl; dxl >= sdx - WIN_CONDITION && dyl < sdy + WIN_CONDITION; dxl--, dyl++) {
-                        if (*gCheck[dxl][dyl] == BLACK) {
-                            bc++;
-                        }
-                        if (*gCheck[dxl][dyl] == WHITE) {
-                            wc++;
-                        }
+                }
+                else if(xCoord - i < 0 && yCoord + i >= BOARD_SIZE){
+                    if(*gCheck[xCoord - i][yCoord+i]== BLACK){
+                        diagL++;
                     }
-                    if (bc == WIN_CONDITION) {
-                        bWin = true;
-                    }
-                    if (wc == WIN_CONDITION * 2) {
-                        wWin = true;
-                    }
+                }
+
+                if(vert == 5 || horz == 5 || diagL == 5 || diaR == 5){
+                    bWin = true;
                 }
             }
         }
