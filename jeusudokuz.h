@@ -66,7 +66,6 @@ protected:
     int grid[13][13]={0};
 
     const int BOARD_SIZE = 13;
-    const int WIN_CONDITION = 5;
     const int BLACK = 1;
     const int WHITE = 2;
 
