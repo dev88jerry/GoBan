@@ -159,74 +159,74 @@ bool JeuSudokuz::gagner()
         for(int yCoord = 0; yCoord < BOARD_SIZE; yCoord++){
             int vertBlack, horzBlack, diagLBlack, diagRBlack = 0;
             int vertWhite, horzWhite, diagLWhite, diagRWhite = 0;
-            for(int i = 1; i < 5; i++){
+            for(int i = 0; i < 5; i++){
                 if(yCoord + i >= BOARD_SIZE && xCoord + i >= BOARD_SIZE && xCoord - i < 0){
-                    if(*gCheck[xCoord + i][yCoord]== BLACK){
+                    if(*gCheck[xCoord + i][yCoord] == BLACK){
                         horzBlack++;
                     }
-                    if(*gCheck[xCoord][yCoord + i]== BLACK){
+                    if(*gCheck[xCoord][yCoord + i] == BLACK){
                         vertBlack++;
                     }
-                    if(*gCheck[xCoord + i][yCoord + i]== BLACK){
+                    if(*gCheck[xCoord + i][yCoord + i] == BLACK){
                         diagRBlack++;
                     }
-                    if(*gCheck[xCoord - i][yCoord+i]== BLACK){
+                    if(*gCheck[xCoord - i][yCoord+i] == BLACK){
                         diagLBlack++;
                     }
-                    if(*gCheck[xCoord + i][yCoord]== WHITE){
+                    if(*gCheck[xCoord + i][yCoord] == WHITE){
                         horzWhite++;
                     }
-                    if(*gCheck[xCoord][yCoord + i]== WHITE){
+                    if(*gCheck[xCoord][yCoord + i] == WHITE){
                         vertWhite++;
                     }
-                    if(*gCheck[xCoord + i][yCoord + i]== WHITE){
+                    if(*gCheck[xCoord + i][yCoord + i] == WHITE){
                         diagRWhite++;
                     }
-                    if(*gCheck[xCoord - i][yCoord+i]== WHITE){
+                    if(*gCheck[xCoord - i][yCoord+i] == WHITE){
                         diagLWhite++;
                     }
                 }
                 else if(yCoord + i >= BOARD_SIZE && xCoord + i >= BOARD_SIZE){
-                    if(*gCheck[xCoord + i][yCoord]== BLACK){
+                    if(*gCheck[xCoord + i][yCoord] == BLACK){
                         horzBlack++;
                     }
-                    if(*gCheck[xCoord][yCoord + i]== BLACK){
+                    if(*gCheck[xCoord][yCoord + i] == BLACK){
                         vertBlack++;
                     }
-                    if(*gCheck[xCoord + i][yCoord + i]== BLACK){
+                    if(*gCheck[xCoord + i][yCoord + i] == BLACK){
                         diagRBlack++;
                     }
-                    if(*gCheck[xCoord + i][yCoord]== WHITE){
+                    if(*gCheck[xCoord + i][yCoord] == WHITE){
                         horzWhite++;
                     }
-                    if(*gCheck[xCoord][yCoord + i]== WHITE){
+                    if(*gCheck[xCoord][yCoord + i] == WHITE){
                         vertWhite++;
                     }
-                    if(*gCheck[xCoord + i][yCoord + i]== WHITE){
+                    if(*gCheck[xCoord + i][yCoord + i] == WHITE){
                         diagRWhite++;
                     }
                 }
                 else if(yCoord + i >= BOARD_SIZE){
-                    if(*gCheck[xCoord][yCoord + i]== BLACK){
+                    if(*gCheck[xCoord][yCoord + i] == BLACK){
                         vertBlack++;
                     }
-                    if(*gCheck[xCoord][yCoord + i]== WHITE){
+                    if(*gCheck[xCoord][yCoord + i] == WHITE){
                         vertWhite++;
                     }
                 }
                 else if(xCoord + i >= BOARD_SIZE){
-                    if(*gCheck[xCoord + i][yCoord]== BLACK){
+                    if(*gCheck[xCoord + i][yCoord] == BLACK){
                         horzBlack++;
                     }
-                    if(*gCheck[xCoord + i][yCoord]== WHITE){
+                    if(*gCheck[xCoord + i][yCoord] == WHITE){
                         horzWhite++;
                     }
                 }
                 else if(xCoord - i < 0 && yCoord + i >= BOARD_SIZE){
-                    if(*gCheck[xCoord - i][yCoord+i]== BLACK){
+                    if(*gCheck[xCoord - i][yCoord+i] == BLACK){
                         diagLBlack++;
                     }
-                    if(*gCheck[xCoord - i][yCoord+i]== WHITE){
+                    if(*gCheck[xCoord - i][yCoord+i] == WHITE){
                         diagLWhite++;
                     }
                 }
